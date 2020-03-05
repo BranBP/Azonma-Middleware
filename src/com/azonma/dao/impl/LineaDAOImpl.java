@@ -150,7 +150,7 @@ public class LineaDAOImpl implements LineaDAO{
 			if(l.getValoracion() != null) {
 				preparedStatement.setInt(i++, l.getValoracion());
 			}else {
-				preparedStatement.setNull(i++, java.sql.Types.INTEGER); 
+				preparedStatement.setNull(i++, java.sql.Types.INTEGER);  
 			}
 
 			preparedStatement.setLong(i++, l.getIdPedido());

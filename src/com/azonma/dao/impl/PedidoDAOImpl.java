@@ -250,7 +250,6 @@ public class PedidoDAOImpl implements PedidoDAO{
 	@Override
 	public void delete(Connection connection, long idPedido) throws DataException {
 		this.updateEstado(connection, idPedido, Estado.BORRADO);
-		
 	}
 
 	public Pedido loadNext(Connection cn, ResultSet rs) throws SQLException, DataException {

@@ -1,5 +1,8 @@
 package com.azonma.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Categoria { 
 
 	private long id = 0;
@@ -7,7 +10,17 @@ public class Categoria {
 	private String idioma = null; 
 	private Long idPadre = null;
 	
+	private List<CategoriaIdioma> idiomas = new ArrayList<CategoriaIdioma>();
+	
 	public Categoria() {
+	}
+
+	public List<CategoriaIdioma> getIdiomas() {
+		return idiomas;
+	}
+
+	public void setIdiomas(List<CategoriaIdioma> idiomas) {
+		this.idiomas = idiomas;
 	}
 
 	public String getNombre() {
@@ -44,6 +57,7 @@ public class Categoria {
 
 	@Override
 	public String toString() {
-		return "Categoria [id=" + id + ", nombre=" + nombre + ", idioma=" + idioma + ", idPadre=" + idPadre + "]";
+		return "Categoria [id=" + id + ", nombre=" + nombre + ", idioma=" + idioma + ", idPadre=" + idPadre
+				+ ", idiomas=" + idiomas + "]";
 	}
 }
