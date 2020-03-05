@@ -63,10 +63,10 @@ public class UsuarioTest {
 	public static void main(String[] args) throws DataException{
 
 		UsuarioTest test = new UsuarioTest();
-		//
-		//		test.findById();
-		//		test.findByCriteria();
-		//		test.create();
+
+		test.findById();
+		test.findByCriteria();
+		test.create();
 
 	}
 

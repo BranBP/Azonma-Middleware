@@ -11,10 +11,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.azonma.dao.CategoriaDAO;
-import com.azonma.dao.CategoriaIdiomaDAO;
 import com.azonma.exceptions.DataException;
 import com.azonma.model.Categoria;
-import com.azonma.model.CategoriaIdioma;
 import com.azonma.util.JDBCUtils;
 import com.azonma.util.QueryUtils;
 import com.mysql.jdbc.Statement;
@@ -22,12 +20,6 @@ import com.mysql.jdbc.Statement;
 public class CategoriaDAOImpl implements CategoriaDAO{ 
 
 	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
-
-	private CategoriaIdiomaDAO categoriaIdiomaDAO = null;
-
-	public CategoriaDAOImpl() {
-		categoriaIdiomaDAO = new CategoriaIdiomaDAOImpl(); 
-	}
 
 	@Override
 	public Categoria findById(Connection connection, long id) throws DataException {
@@ -168,11 +160,6 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 				Long id = rs.getLong(1); 
 				c.setId(id); 
 			} 
-			
-			for(CategoriaIdioma ci: c.getIdiomas()) {
-				ci.setIdCategoria(c.getId());;
-				categoriaIdiomaDAO.create(connection, ci);  
-			}
 
 		} catch (SQLException e) {
 			logger.error("Error. Categoria: {}", c);  

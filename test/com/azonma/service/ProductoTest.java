@@ -42,7 +42,7 @@ public class ProductoTest {
 
 		ProductoTest test = new ProductoTest();
 
-		//		test.FindByCriteria();
+		test.FindByCriteria();
 		test.findById();
 
 	}

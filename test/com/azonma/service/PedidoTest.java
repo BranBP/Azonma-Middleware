@@ -77,12 +77,12 @@ public class PedidoTest {
 
 	public static void main(String[] args) throws DataException {
 
-				PedidoTest test = new PedidoTest();
-		//
-		//		test.TestUpdateEstado();
-		//		test.TestFindByCriteria();
-				test.TestCreate();
-		//		test.TestFindById();
+		PedidoTest test = new PedidoTest();
+
+		test.TestUpdateEstado();
+		test.TestFindByCriteria();
+		test.TestCreate();
+		test.TestFindById();
 	}
 
 }
