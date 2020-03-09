@@ -19,7 +19,7 @@ import com.azonma.util.QueryUtils;
 
 public class ProductoDAOImpl implements ProductoDAO {
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName()); 
 
 	@Override
 	public Producto findById(Connection connection, long id) throws DataException{

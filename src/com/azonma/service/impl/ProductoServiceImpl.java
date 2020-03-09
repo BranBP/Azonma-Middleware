@@ -18,9 +18,9 @@ import com.azonma.util.JDBCUtils;
 
 public class ProductoServiceImpl implements ProductoService{
 
-	private static Logger logger = LogManager.getLogger(PedidoServiceImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(ProductoServiceImpl.class.getName());
 	
-	private ProductoDAO dao = null;
+	private ProductoDAO dao = null; 
 
 	public ProductoServiceImpl() {
 		dao = new ProductoDAOImpl();

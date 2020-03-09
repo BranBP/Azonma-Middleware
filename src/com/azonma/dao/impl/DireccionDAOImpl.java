@@ -17,7 +17,7 @@ import com.mysql.jdbc.Statement;
 
 public class DireccionDAOImpl implements DireccionDAO{
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(DireccionDAOImpl.class.getName());
 
 	@Override
 	public Direccion findById(Connection connection, long id) throws DataException {

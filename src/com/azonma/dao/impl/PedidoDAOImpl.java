@@ -24,7 +24,7 @@ import com.mysql.jdbc.Statement;
 
 public class PedidoDAOImpl implements PedidoDAO{
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(PedidoDAOImpl.class.getName()); 
 
 	private LineaDAO lineaDAO = null;
 

@@ -19,7 +19,7 @@ import com.mysql.jdbc.Statement;
 
 public class LineaDAOImpl implements LineaDAO{ 
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(LineaDAOImpl.class.getName());
 
 	@Override
 	public Linea findById(Connection cn, long id)  throws DataException{ 

@@ -18,7 +18,7 @@ import com.azonma.util.QueryUtils;
 
 public class ProvinciaDAOImpl implements ProvinciaDAO{ 
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(ProvinciaDAOImpl.class.getName());
 
 	@Override
 	public Provincia findById(Connection connection, long id) throws DataException{ 

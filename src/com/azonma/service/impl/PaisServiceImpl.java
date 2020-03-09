@@ -16,7 +16,7 @@ import com.azonma.util.JDBCUtils;
 
 public class PaisServiceImpl implements PaisService{
 
-	private static Logger logger = LogManager.getLogger(ProvinciaServiceImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(PaisServiceImpl.class.getName()); 
 
 	private PaisDAO dao = null; 
 	

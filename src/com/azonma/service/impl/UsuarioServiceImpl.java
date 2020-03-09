@@ -18,8 +18,8 @@ import com.azonma.util.JDBCUtils;
 
 public class UsuarioServiceImpl implements UsuarioService{
 
-	private static Logger logger = LogManager.getLogger(PedidoServiceImpl.class.getName());
-
+	private static Logger logger = LogManager.getLogger(UsuarioServiceImpl.class.getName());
+ 
 	private UsuarioDAO dao = null;
 
 	public UsuarioServiceImpl() {

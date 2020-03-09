@@ -22,7 +22,7 @@ import com.mysql.jdbc.Statement;
 
 public class UsuarioDAOImpl implements UsuarioDAO{
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(UsuarioDAOImpl.class.getName());
 
 	@Override
 	public Usuario findById(Connection connection, long id) throws DataException { 

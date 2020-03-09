@@ -20,7 +20,7 @@ import com.azonma.util.QueryUtils;
 
 public class PaisDAOImpl implements PaisDAO{ 
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(PaisDAOImpl.class.getName()); 
 
 	private ProvinciaDAO provinciaDAO = null;
 

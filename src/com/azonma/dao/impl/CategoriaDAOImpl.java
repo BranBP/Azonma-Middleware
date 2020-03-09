@@ -19,7 +19,7 @@ import com.mysql.jdbc.Statement;
 
 public class CategoriaDAOImpl implements CategoriaDAO{ 
 
-	private static Logger logger = LogManager.getLogger(ProductoDAOImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(CategoriaDAOImpl.class.getName()); 
 
 	@Override
 	public Categoria findById(Connection connection, long id) throws DataException {
