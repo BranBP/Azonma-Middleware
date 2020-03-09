@@ -7,27 +7,26 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.azonma.dao.ProductoDAO;
-import com.azonma.dao.impl.ProductoDAOImpl;
+import com.azonma.dao.CategoriaDAO;
+import com.azonma.dao.impl.CategoriaDAOImpl;
 import com.azonma.exceptions.DataException;
-import com.azonma.model.Producto;
-import com.azonma.model.criteria.ProductoCriteria;
-import com.azonma.service.ProductoService;
+import com.azonma.model.Categoria;
+import com.azonma.service.CategoriaService;
 import com.azonma.util.DBUtils;
 import com.azonma.util.JDBCUtils;
 
-public class ProductoServiceImpl implements ProductoService{
+public class CategoriaServiceImpl  implements CategoriaService{
 
 	private static Logger logger = LogManager.getLogger(PedidoServiceImpl.class.getName());
-	
-	private ProductoDAO dao = null;
 
-	public ProductoServiceImpl() {
-		dao = new ProductoDAOImpl();
+	private CategoriaDAO dao = null;
+
+	public CategoriaServiceImpl() {
+		dao = new CategoriaDAOImpl(); 
 	}
 
 	@Override
-	public Producto findById(Long id) throws DataException {
+	public Categoria findById(Long id) throws DataException {
 
 		Connection connection = null;
 
@@ -46,9 +45,9 @@ public class ProductoServiceImpl implements ProductoService{
 		}
 
 	}
-	
+
 	@Override
-	public List<Producto> findByCriteria(ProductoCriteria c, Integer startIndex, Integer timesCount) throws DataException { 
+	public List<Categoria> findAll(Integer startIndex, Integer timesCount) throws DataException {
 
 		Connection connection = null;
 
@@ -57,7 +56,7 @@ public class ProductoServiceImpl implements ProductoService{
 			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			return dao.findByCriteria(connection, c, startIndex, timesCount);	
+			return dao.findAll(connection, startIndex, timesCount);	
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);

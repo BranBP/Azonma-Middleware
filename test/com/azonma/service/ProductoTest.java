@@ -20,7 +20,7 @@ public class ProductoTest {
 
 		Producto p = new Producto(); 
 
-		p = service.findById(12);
+		p = service.findById((long) 12);
 		System.out.println(p);
 	}
 

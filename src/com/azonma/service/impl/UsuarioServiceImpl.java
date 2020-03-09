@@ -27,7 +27,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Usuario findById(long id) throws DataException {
+	public Usuario findById(Long id) throws DataException {
 
 		Connection connection = null;
 
@@ -74,7 +74,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void update(long id, Usuario u) throws DataException {
+	public void update(Usuario u, Long id) throws DataException {
 
 		Connection connection = null;
 
@@ -83,7 +83,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			dao.update(connection, id, u);	
+			dao.update(connection, u, id);	 
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);
@@ -94,7 +94,27 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public void delete(long id) throws DataException {
+	public void updateEstado(Long id, Integer idEstado) throws DataException {
+
+		Connection connection = null;
+
+		try {
+
+			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
+			connection.setAutoCommit(true);
+
+			dao.updateEstado(connection, id, idEstado);	  
+
+		} catch (SQLException e){
+			logger.error(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(connection); 
+		}
+	}
+
+	@Override
+	public void delete(Long id) throws DataException {
 
 		Connection connection = null;
 
@@ -113,7 +133,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 		}
 	}
 
-	@Override
+	@Override 
 	public List<Usuario> findByCriteria(UsuarioCriteria c) throws DataException {
 
 		Connection connection = null;

@@ -21,7 +21,7 @@ public class UsuarioTest {
 	public void findById() throws DataException{
 
 		Usuario u = new Usuario();
-		u = service.findById(1);
+		u = service.findById((long) 1);
 		System.out.println(u);
 	}
 
@@ -30,12 +30,7 @@ public class UsuarioTest {
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		UsuarioCriteria uc = new UsuarioCriteria();
 
-		uc.setNombre("b");
-		uc.setApellido1("a");
-		uc.setEmail("pascualinbbp@gmail.com");
-		uc.setFechaNacimiento(new Date(2001-01-30)); 
-		uc.setIdioma("es");
-		uc.setSexo("h");
+		uc.setEstado("creado"); 
 
 		usuarios = service.findByCriteria(uc);
 
@@ -60,13 +55,29 @@ public class UsuarioTest {
 		System.out.println(u);
 	}
 
+	public void update() throws DataException{
+
+		Usuario u = new Usuario();
+
+		u = service.findById((long) 2);
+
+		service.update(u, u.getId());  
+		System.out.println(u);
+	}
+
+	public void delete() throws DataException{
+		service.delete((long) 11);
+	}
+
 	public static void main(String[] args) throws DataException{
 
 		UsuarioTest test = new UsuarioTest();
 
-		test.findById();
-		test.findByCriteria();
-		test.create();
+		//		test.findById();
+		//		test.findByCriteria();
+		//		test.create();
+		//		test.update();
+		test.delete();
 
 	}
 

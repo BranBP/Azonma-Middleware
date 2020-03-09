@@ -15,8 +15,17 @@ public class Usuario {
 	private String apellido2 = null;
 	private String idSexo; 
 	private long idIdioma = 0;
+	private String estado = null;
 
 	public Usuario() {
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public long getId() {
@@ -93,8 +102,8 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", email=" + email + ", contrasena=" + PasswordEncryption.encryptPassword(contrasena) + ", fechaNacimiento="
-				+ fechaNacimiento + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
-				+ ", idSexo=" + idSexo + ", idIdioma=" + idIdioma + "]"; 
+		return "Usuario [id=" + id + ", email=" + email + ", contrasena=" + PasswordEncryption.encryptPassword(contrasena)
+		+", fechaNacimiento=" + fechaNacimiento + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
+		+", idSexo=" + idSexo + ", idIdioma=" + idIdioma + ", estado=" + estado + "]"; 
 	}
 }

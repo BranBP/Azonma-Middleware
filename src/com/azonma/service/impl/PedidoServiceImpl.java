@@ -93,8 +93,29 @@ public class PedidoServiceImpl implements PedidoService{
 			JDBCUtils.closeConnection(connection); 
 		}
 	}
-	
-	public void updateEstado(long id, int idEstado) throws DataException{
+
+	@Override
+	public void update(Pedido pedido, Long idPedido) throws DataException {
+
+		Connection connection = null;
+
+		try {
+
+			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
+			connection.setAutoCommit(true);
+
+			dao.update(connection, pedido, idPedido);	  
+
+		} catch (SQLException e){
+			logger.error(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(connection); 
+		}
+	}
+
+	@Override
+	public void updateEstado(Long id, Integer idEstado) throws DataException{
 
 		Connection connection = null;
 
@@ -104,6 +125,26 @@ public class PedidoServiceImpl implements PedidoService{
 			connection.setAutoCommit(true);
 
 			dao.updateEstado(connection, id, idEstado);	
+
+		} catch (SQLException e){
+			logger.error(e.getMessage(),e);
+			throw new DataException(e);
+		} finally {
+			JDBCUtils.closeConnection(connection); 
+		}
+	}
+
+	@Override
+	public void delete(long idPedido) throws DataException {
+
+		Connection connection = null;
+
+		try {
+
+			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
+			connection.setAutoCommit(true);
+
+			dao.delete(connection, idPedido);	 
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);

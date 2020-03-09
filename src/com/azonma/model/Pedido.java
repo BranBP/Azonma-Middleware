@@ -12,11 +12,20 @@ public class Pedido {
 	private double precioTotal = 0.0;
 	private long idUsuario = 0;
 	private int idEstado = 0;
+	private boolean carrito = false;
 
 	private List<Linea> lineas;
 
 	public Pedido() {
 		lineas = new ArrayList<Linea>();
+	}
+
+	public boolean isCarrito() {
+		return carrito;
+	}
+
+	public void setCarrito(boolean carrito) {
+		this.carrito = carrito;
 	}
 
 	public List<Linea> getLineas() { 
@@ -69,12 +78,8 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id 
-				+", fecha=" + fecha 
-				+", precioTotal=" + precioTotal 
-				+", idUsuario=" + idUsuario
-				+", idEstado=" + idEstado 
-				+", lineas=" + lineas + "]"; 
+		return "Pedido [id=" + id + ", fecha=" + fecha + ", precioTotal=" + precioTotal + ", idUsuario=" + idUsuario
+				+ ", idEstado=" + idEstado + ", carrito=" + carrito + ", lineas=" + lineas + "]";
 	}
 
 }

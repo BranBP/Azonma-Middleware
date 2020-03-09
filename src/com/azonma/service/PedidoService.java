@@ -13,8 +13,12 @@ public interface PedidoService {
 	public List<Pedido> findByCriteria(PedidoCriteria c) throws DataException;
 	
     public Pedido create(Pedido p) throws DataException;
-    
-    public void updateEstado(long id, int idEstado) throws DataException;
+
+	public void update(Pedido pedido, Long idPedido) throws DataException;   
+     
+    public void updateEstado(Long id, Integer idEstado) throws DataException;
+
+	public void delete(long idPedido) throws DataException;
 
 	//    public Boolean exists(Long id) 
 	//    		throws DataException;
@@ -23,11 +27,5 @@ public interface PedidoService {
 	//    	throws DataException;
 	//     
 	//     public long countAll() 
-	//     		throws DataException;          
-	// 
-	//     public void update(Pedido p) 
-	//     		throws InstanceNotFoundException, DataException;
-	//         
-	//     public long delete(Long id) 
-	//     		throws InstanceNotFoundException, DataException;
+	//     		throws DataException;   
 }

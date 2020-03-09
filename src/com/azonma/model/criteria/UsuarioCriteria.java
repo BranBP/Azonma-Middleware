@@ -11,8 +11,17 @@ public class UsuarioCriteria {
 	private String apellido2 = null;
 	private String sexo = null;
 	private String idioma = null;
+	private String estado = null; 
 
 	public UsuarioCriteria() {
+	}
+
+	public String getEstado() {
+		return estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public String getEmail() {

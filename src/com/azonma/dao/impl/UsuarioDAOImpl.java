@@ -12,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 import com.azonma.dao.UsuarioDAO;
 import com.azonma.exceptions.DataException;
+import com.azonma.model.Estado;
 import com.azonma.model.Usuario;
 import com.azonma.model.criteria.UsuarioCriteria;
 import com.azonma.util.JDBCUtils;
@@ -34,13 +35,14 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		try {
 
 			StringBuilder stringBuilder = new StringBuilder(
-					"SELECT ID_USUARIO, EMAIL, CONTRASENA, FECHA_NACIMIENTO, NOMBRE, "
-							+ " APELLIDO1, APELLIDO2, ID_SEXO, ID_IDIOMA FROM USUARIO "
+					"SELECT U.ID_USUARIO, U.EMAIL, U.CONTRASENA, U.FECHA_NACIMIENTO, U.NOMBRE, "
+							+" U.APELLIDO1, U.APELLIDO2, U.ID_SEXO, U.ID_IDIOMA, E.NOMBRE FROM USUARIO U "
+							+" INNER JOIN ESTADO E ON U.ID_ESTADO = E.ID_ESTADO "
 					); 
 
 			boolean first = true;
 
-			first = QueryUtils.addClause(id, stringBuilder, first, " ID_USUARIO = ? ");
+			first = QueryUtils.addClause(id, stringBuilder, first, " U.ID_USUARIO = ? ");
 
 			query = stringBuilder.toString();
 			preparedStatement = connection.prepareStatement(query);
@@ -80,9 +82,10 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 		try {
 
-			StringBuilder stringBuilder = new StringBuilder(" SELECT U.ID_USUARIO, U.EMAIL, U.CONTRASENA, U.FECHA_NACIMIENTO, U.NOMBRE,"
-					+" U.APELLIDO1, U.APELLIDO2, U.ID_SEXO, U.ID_IDIOMA "
-					+" FROM USUARIO U INNER JOIN IDIOMA I ON U.ID_IDIOMA = I.ID_IDIOMA ");
+			StringBuilder stringBuilder = new StringBuilder(" SELECT U.ID_USUARIO, U.EMAIL, U.CONTRASENA, U.FECHA_NACIMIENTO,"
+					+" U.NOMBRE, U.APELLIDO1, U.APELLIDO2, U.ID_SEXO, U.ID_IDIOMA, E.NOMBRE "
+					+" FROM USUARIO U INNER JOIN IDIOMA I ON U.ID_IDIOMA = I.ID_IDIOMA "
+					+" INNER JOIN ESTADO E ON U.ID_ESTADO = E.ID_ESTADO ");
 
 			boolean first = true;
 
@@ -112,6 +115,10 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			if(uc.getIdioma() != null) {
 				first = QueryUtils.addClause(uc.getIdioma(), stringBuilder, first, " UPPER(I.NOMBRE) LIKE ? ");
+			}
+			 
+			if(uc.getEstado()!=null) {
+				first = QueryUtils.addClause(uc.getEstado(), stringBuilder, first, " UPPER(E.NOMBRE) LIKE ? ");
 			}
 
 			query = stringBuilder.toString();
@@ -144,6 +151,10 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			if(uc.getIdioma() != null) {
 				preparedStatement.setString(i++, "%" + uc.getIdioma() + "%"); 
+			}
+
+			if(uc.getEstado() != null) {
+				preparedStatement.setString(i++, "%" + uc.getEstado() + "%");  
 			}
 
 			rs = preparedStatement.executeQuery();
@@ -184,9 +195,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 		try {
 
-			// Creamos el preparedstatement
-			query = " INSERT INTO USUARIO (EMAIL, CONTRASENA, FECHA_NACIMIENTO, NOMBRE, APELLIDO1, APELLIDO2, ID_SEXO, ID_IDIOMA) "
-					+" VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+			query = " INSERT INTO USUARIO (EMAIL, CONTRASENA, FECHA_NACIMIENTO, NOMBRE, APELLIDO1, APELLIDO2, ID_SEXO, ID_IDIOMA, ID_ESTADO)"
+					+" VALUES (?, ?, ?, ?, ?, ?, ?, ?, "+Estado.CREADO+")"; 
 
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -209,8 +219,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 			preparedStatement.setString(i++, u.getIdSexo()); 
 			preparedStatement.setLong(i++, u.getIdIdioma()); 
-
-			// Execute query
+			
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {
@@ -234,18 +243,90 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	}
 
 	@Override
-	public void update(Connection cn, long id, Usuario u) throws DataException {  
-		// TODO Auto-generated method stub
+	public void update(Connection cn, Usuario u, long id) throws DataException {    
+
+		PreparedStatement preparedStatement = null;
+		String query = null;
+
+		try {
+
+			query = " UPDATE USUARIO SET EMAIL = ?, CONTRASENA = ?, FECHA_NACIMIENTO = ?, NOMBRE = ?, APELLIDO1 = ?,"
+					+" APELLIDO2 = ?, ID_SEXO = ?, ID_IDIOMA = ? WHERE ID_USUARIO = " +id; 
+
+			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", query);
+			}
+
+			int i = 1;
+			preparedStatement.setString(i++, u.getEmail()); 
+			preparedStatement.setString(i++, PasswordEncryption.encryptPassword(u.getContrasena())); 
+			preparedStatement.setDate(i++, new java.sql.Date(u.getFechaNacimiento().getTime())); 
+			preparedStatement.setString(i++, u.getNombre()); 
+			preparedStatement.setString(i++, u.getApellido1()); 
+
+			if(u.getApellido2()!=null) {
+				preparedStatement.setString(i++, u.getApellido2()); 
+			}else {
+				preparedStatement.setNull(i++, java.sql.Types.VARCHAR);   
+			}
+
+			preparedStatement.setString(i++, u.getIdSexo()); 
+			preparedStatement.setLong(i++, u.getIdIdioma()); 
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) {
+				throw new SQLException("Can not add row to table 'Usuario'");
+			}
+
+		} catch (Exception e) {
+			logger.error("Error: {}", preparedStatement.toString()); 
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+	}
+
+	@Override 
+	public void updateEstado(Connection cn, long id, int idEstado) throws DataException { 
+
+		PreparedStatement preparedStatement = null;
+		String query = null;
+
+		try {
+
+			query = " UPDATE USUARIO SET ID_ESTADO = " + idEstado + " WHERE ID_PEDIDO = " + id; 
+
+			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", query);
+			}
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) {
+				throw new SQLException("Can not add row to table 'Pedido'");
+			}
+
+		}catch (SQLException e) {
+			logger.error("Error. idUsuario: {}, idEstado: {}", id, idEstado);  
+		}
+
+		finally {            
+			JDBCUtils.closeStatement(preparedStatement);
+		}
 	}
 
 	@Override
 	public void delete(Connection connection, long id) throws DataException {
-		// TODO Auto-generated method stub
+		this.updateEstado(connection, id, Estado.BORRADO);  
 	}
 
 	public Usuario loadNext(ResultSet rs) throws SQLException, DataException {
 
-		Usuario r = new Usuario();
+		Usuario r = new Usuario(); 
 		int i = 1;
 
 		r.setId(rs.getLong(i++));
@@ -256,7 +337,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 		r.setApellido1(rs.getString(i++));
 		r.setApellido2(rs.getString(i++));
 		r.setIdSexo(rs.getString(i++)); 
-		r.setIdIdioma(rs.getLong(i++)); 
+		r.setIdIdioma(rs.getLong(i++));
+		r.setEstado(rs.getString(i++));  
 
 		return r;
 	}

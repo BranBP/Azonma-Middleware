@@ -85,14 +85,10 @@ public class LineaDAOImpl implements LineaDAO{
 
 			boolean first = true;
 
-			first = QueryUtils.addClause(idPedido, sb, first, " ID_PEDIDO = ? ");
+			first = QueryUtils.addClause(idPedido, sb, first, " L.ID_PEDIDO = ? ");
 
 			query = sb.toString();
 			preparedStatement = cn.prepareStatement(query);
-
-			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
-			}
 
 			int i = 1;
 			preparedStatement.setLong(i++, idPedido);
@@ -111,8 +107,12 @@ public class LineaDAOImpl implements LineaDAO{
 				logger.info("Han salido {} resultados", lineas.size()); 
 			} 
 
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", preparedStatement.toString());
+			}
+
 		}catch (SQLException e) {
-			logger.error("Error. idPedido: {}", idPedido);  
+			logger.error("Error: {}", preparedStatement.toString());  
 		}
 
 		finally {            

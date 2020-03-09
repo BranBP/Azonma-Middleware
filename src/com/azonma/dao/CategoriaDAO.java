@@ -12,6 +12,7 @@ public interface CategoriaDAO {
 
 	public List<Categoria> findAll(Connection connection, int startIndex, int timesCount) throws DataException;  
 
-	public Categoria create(Connection connection, Categoria c) throws DataException; 	
-	
+	//	No están implementados ni el create ni el update ni el delete de momento
+	//	Falta el lado de la empresa, es decir la aplicación propia para crear una categoria, producto...etc
+
 }

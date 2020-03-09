@@ -14,6 +14,6 @@ public interface LineaDAO {
 
 	public void create(Connection connection, Linea l) throws DataException;
 
-	//	public void deleteByPedido(long idPedido) throws DataException;
+	//	public void deleteByPedido(Connection connection, long idPedido) throws DataException;
 
 }

@@ -122,56 +122,6 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 		return categorias;
 	}
 
-	@Override
-	public Categoria create(Connection connection, Categoria c) throws DataException {
-
-		PreparedStatement preparedStatement = null; 
-		String query = null;
-		ResultSet rs = null;
-
-		try {
-
-			query = " INSERT INTO CATEGORIA (ID_CATEGORIA_PADRE) "
-					+" VALUES (?, ?)";
-
-			preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
-
-
-			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
-			}
-
-			int i = 1;
-			if(c.getIdPadre()!=null) {
-				preparedStatement.setLong(i++, c.getIdPadre());
-			}else {
-				preparedStatement.setNull(i++, java.sql.Types.BIGINT); 
-			}
-
-			int insertedRows = preparedStatement.executeUpdate();
-
-			if (insertedRows == 0) {
-				throw new SQLException("Can not add row to table 'Categoria'");
-			}
-
-			rs = preparedStatement.getGeneratedKeys();
-
-			if (rs.next()) {
-				Long id = rs.getLong(1); 
-				c.setId(id); 
-			} 
-
-		} catch (SQLException e) {
-			logger.error("Error. Categoria: {}", c);  
-		}
-
-		finally {            
-			JDBCUtils.closeResultSet(rs);
-			JDBCUtils.closeStatement(preparedStatement); 
-		}
-		return c; 
-	}
-
 	public Categoria loadNext(ResultSet rs) throws SQLException {
 
 		Categoria r = new Categoria();   

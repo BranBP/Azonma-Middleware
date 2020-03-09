@@ -15,10 +15,10 @@ public interface PedidoDAO {
 
 	public Pedido create(Connection connection, Pedido pedido) throws DataException;
 
+	public void update(Connection connection, Pedido pedido, long idPedido) throws DataException;  
+
 	public void updateEstado(Connection connection, long id, int idEstado) throws DataException;
 
 	public void delete(Connection connection, long idPedido) throws DataException;
-
-	//	public void update(Connection connection, Pedido pedido) throws DataException; 
 
 }

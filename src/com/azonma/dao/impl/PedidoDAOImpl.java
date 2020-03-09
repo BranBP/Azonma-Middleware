@@ -42,8 +42,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 		try {
 
-			StringBuilder stringBuilder = new StringBuilder("SELECT ID_PEDIDO, FECHA, PRECIO_TOTAL, ID_USUARIO, ID_ESTADO"
-					+" FROM PEDIDO "); 
+			StringBuilder stringBuilder = new StringBuilder(" SELECT ID_PEDIDO, FECHA, PRECIO_TOTAL, CARRITO, ID_USUARIO, ID_ESTADO FROM PEDIDO "); 
 
 			boolean first = true;
 
@@ -51,13 +50,13 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 			query = stringBuilder.toString();
 			preparedStatement = connection.prepareStatement(query);
-			
-			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
-			}
 
 			int i = 1;
 			preparedStatement.setLong(i++, id);
+			
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", preparedStatement.toString());
+			}
 
 			rs = preparedStatement.executeQuery(); 
 
@@ -88,7 +87,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 		try {
 
 			StringBuilder stringBuilder = new StringBuilder("SELECT P.ID_PEDIDO,"
-					+" P.FECHA, P.PRECIO_TOTAL, P.ID_USUARIO, P.ID_ESTADO FROM PEDIDO P ");
+					+" P.FECHA, P.PRECIO_TOTAL, P.CARRITO, P.ID_USUARIO, P.ID_ESTADO FROM PEDIDO P ");
 
 			boolean first = true;
 
@@ -147,7 +146,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			}
 
 		} catch (SQLException e) {
-			logger.error("Error. Pedido: {}", c);  
+			logger.error("Error: {}", preparedStatement.toString());  
 		}
 
 		finally {            
@@ -167,8 +166,8 @@ public class PedidoDAOImpl implements PedidoDAO{
 		try {
 
 			// Creamos el preparedstatement
-			query = " INSERT INTO PEDIDO (FECHA, PRECIO_TOTAL, ID_USUARIO, ID_ESTADO) "
-					+" VALUES (?, ?, ?,"+Estado.CREADO+")";
+			query = " INSERT INTO PEDIDO (FECHA, PRECIO_TOTAL, CARRITO, ID_USUARIO, ID_ESTADO) "
+					+" VALUES (?, ?, ?, ?, "+Estado.CREADO+")";
 
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -181,6 +180,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			preparedStatement.setDate(i++, new java.sql.Date(p.getFecha().getTime()));
 			preparedStatement.setDouble(i++, p.getPrecioTotal());
 			preparedStatement.setLong(i++, p.getIdUsuario());
+			preparedStatement.setBoolean(i++, p.isCarrito()); 
 
 			// Execute query
 			int insertedRows = preparedStatement.executeUpdate();
@@ -212,12 +212,48 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 	}
 
+	@Override
+	public void update(Connection connection, Pedido p, long id) throws DataException { 
+
+		PreparedStatement preparedStatement = null;
+		String query = null;
+
+		try {
+
+			query = " UPDATE PEDIDO SET FECHA = ?, PRECIO_TOTAL = ?, CARRITO = ?, ID_USUARIO = ?, ID_ESTADO = ? WHERE ID_USUARIO = " +id; 
+
+			preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  	
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", query);
+			}
+
+			int i = 1;
+			p.setFecha(new Date());
+			preparedStatement.setDate(i++, new java.sql.Date(p.getFecha().getTime()));
+			preparedStatement.setDouble(i++, p.getPrecioTotal());
+			preparedStatement.setBoolean(i++, p.isCarrito());
+			preparedStatement.setLong(i++, p.getIdUsuario());
+			preparedStatement.setInt(i++, p.getIdEstado());
+
+			int insertedRows = preparedStatement.executeUpdate();
+
+			if (insertedRows == 0) {
+				throw new SQLException("Can not add row to table 'Usuario'");
+			}
+
+		} catch (Exception e) {
+			logger.error("Error: {}", preparedStatement.toString()); 
+		} finally {
+			JDBCUtils.closeStatement(preparedStatement);
+		}
+	}
+
 	@Override 
 	public void updateEstado(Connection cn, long id, int idEstado) throws DataException {
 
 		PreparedStatement preparedStatement = null;
 		String query = null;
-		ResultSet rs = null;
 
 		try {
 
@@ -235,14 +271,11 @@ public class PedidoDAOImpl implements PedidoDAO{
 				throw new SQLException("Can not add row to table 'Pedido'");
 			}
 
-			rs = preparedStatement.getGeneratedKeys();
-
 		}catch (SQLException e) {
 			logger.error("Error. idPedido: , idEstado: {} {}", id, idEstado);  
 		}
 
 		finally {            
-			JDBCUtils.closeResultSet(rs);
 			JDBCUtils.closeStatement(preparedStatement);
 		}
 	}
@@ -260,6 +293,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 		r.setId(rs.getLong(i++));
 		r.setFecha(rs.getDate(i++));
 		r.setPrecioTotal(rs.getDouble(i++));
+		r.setCarrito(rs.getBoolean(i++)); 
 		r.setIdUsuario(rs.getLong(i++));
 		r.setIdEstado(rs.getInt(i++));
 

@@ -23,7 +23,8 @@ public class PedidoTest {
 
 		Pedido p = new Pedido();
 
-		p = service.findById(37l);
+		p = service.findById(1l);
+
 		System.out.println(p);
 	}
 
@@ -58,7 +59,8 @@ public class PedidoTest {
 		lineas.add(l);
 
 		p.setFecha(new Date());
-		p.setIdEstado(Estado.CARRITO);
+		p.setIdEstado(Estado.CREADO); 
+		p.setCarrito(true);
 		p.setIdUsuario(1);
 		p.setLineas(lineas);
 		p.setPrecioTotal(p.getPrecioTotal() + l.getPrecioTotal());
@@ -67,22 +69,40 @@ public class PedidoTest {
 		System.out.println(p);
 	}
 
+	public void TestUpdate() throws DataException {
+
+		Pedido p = new Pedido();
+		
+		p = service.findById(2l); 
+		
+		p.setCarrito(true);
+
+		service.update(p, 2l); 
+	}
+
 	public void TestUpdateEstado() throws DataException {
 
 		Pedido p = new Pedido();
+		
 		p.setId(1);
 
-		service.updateEstado(p.getId(), Estado.BORRADO);
+		service.updateEstado(p.getId(), Estado.CREADO); 
+	}
+
+	public void TestDeleteEstado() throws DataException { 
+		service.delete(1);
 	}
 
 	public static void main(String[] args) throws DataException {
 
 		PedidoTest test = new PedidoTest();
 
-		test.TestUpdateEstado();
-		test.TestFindByCriteria();
-		test.TestCreate();
-		test.TestFindById();
+		test.TestUpdate();
+//		test.TestDeleteEstado();
+//		test.TestUpdateEstado();
+//		test.TestFindByCriteria();
+//		test.TestCreate();
+//		test.TestFindById();
 	}
 
 }
