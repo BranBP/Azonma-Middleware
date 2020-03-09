@@ -7,26 +7,21 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.azonma.dao.CategoriaDAO;
-import com.azonma.dao.impl.CategoriaDAOImpl;
+import com.azonma.dao.ProvinciaDAO;
 import com.azonma.exceptions.DataException;
-import com.azonma.model.Categoria;
-import com.azonma.service.CategoriaService;
+import com.azonma.model.Provincia;
+import com.azonma.service.ProvinciaService;
 import com.azonma.util.DBUtils;
 import com.azonma.util.JDBCUtils;
 
-public class CategoriaServiceImpl  implements CategoriaService{
+public class ProvinciaServiceImpl implements ProvinciaService{
 
-	private static Logger logger = LogManager.getLogger(CategoriaServiceImpl.class.getName()); 
+	private static Logger logger = LogManager.getLogger(ProvinciaServiceImpl.class.getName());
 
-	private CategoriaDAO dao = null;
-
-	public CategoriaServiceImpl() {
-		dao = new CategoriaDAOImpl(); 
-	}
+	private ProvinciaDAO dao = null;
 
 	@Override
-	public Categoria findById(Long id) throws DataException {
+	public Provincia findById(Long id) throws DataException {
 
 		Connection connection = null;
 
@@ -47,7 +42,7 @@ public class CategoriaServiceImpl  implements CategoriaService{
 	}
 
 	@Override
-	public List<Categoria> findAll(Integer startIndex, Integer timesCount) throws DataException {
+	public List<Provincia> findByNombre(String nombre) throws DataException {
 
 		Connection connection = null;
 
@@ -56,7 +51,7 @@ public class CategoriaServiceImpl  implements CategoriaService{
 			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			return dao.findAll(connection, startIndex, timesCount);	
+			return dao.findByNombre(connection, nombre);	  
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);
@@ -64,6 +59,12 @@ public class CategoriaServiceImpl  implements CategoriaService{
 		} finally {
 			JDBCUtils.closeConnection(connection); 
 		}
+	}
+
+	@Override
+	public List<Provincia> findByPais(Long idPais) throws DataException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

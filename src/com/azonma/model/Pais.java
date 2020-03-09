@@ -1,12 +1,27 @@
 package com.azonma.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Pais {
 
 	private long id = 0;
-	private char iso;
+	private String iso = null; 
 	private String nombre = null;
 
+	private List<Provincia> provincias;
+
 	public Pais() {
+		provincias = new ArrayList<Provincia>(); 
+	}
+
+	public List<Provincia> getProvincias() {
+		return Collections.unmodifiableList(provincias);  
+	}
+
+	public void setProvincias(List<Provincia> provincias) {
+		this.provincias = provincias;
 	}
 
 	public long getId() {
@@ -17,11 +32,11 @@ public class Pais {
 		this.id = id;
 	}
 
-	public char getIso() {
-		return iso;
+	public String getIso() {
+		return iso; 
 	}
 
-	public void setIso(char iso) {
+	public void setIso(String iso) {
 		this.iso = iso;
 	}
 
@@ -35,8 +50,6 @@ public class Pais {
 
 	@Override
 	public String toString() {
-		return "Pais [id=" + id 
-				+", iso=" + iso 
-				+", nombre=" + nombre + "]";
+		return "Pais [id=" + id + ", iso=" + iso + ", nombre=" + nombre + ", provincias=" + provincias + "]";
 	}
 }

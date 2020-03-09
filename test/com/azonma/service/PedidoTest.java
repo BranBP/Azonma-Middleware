@@ -89,8 +89,8 @@ public class PedidoTest {
 		service.updateEstado(p.getId(), Estado.CREADO); 
 	}
 
-	public void TestDeleteEstado() throws DataException { 
-		service.delete(1);
+	public void TestDelete() throws DataException { 
+		service.delete(1); 
 	}
 
 	public static void main(String[] args) throws DataException {
@@ -98,7 +98,7 @@ public class PedidoTest {
 		PedidoTest test = new PedidoTest();
 
 		test.TestUpdate();
-//		test.TestDeleteEstado();
+//		test.TestDelete();
 //		test.TestUpdateEstado();
 //		test.TestFindByCriteria();
 //		test.TestCreate();

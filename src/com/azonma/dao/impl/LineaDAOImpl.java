@@ -79,13 +79,12 @@ public class LineaDAOImpl implements LineaDAO{
 		try {
 
 			StringBuilder sb = new StringBuilder(
-					" SELECT L.ID_LINEA, L.ID_PEDIDO, L.ID_PRODUCTO, L.PRECIO_TOTAL, L.PRECIO_UNITARIO, L.UNIDADES, L.VALORACION "
-							+ " FROM LINEA L INNER JOIN PEDIDO P ON P.ID_PEDIDO = L.ID_PEDIDO "
+					" SELECT ID_LINEA, ID_PEDIDO, ID_PRODUCTO, PRECIO_TOTAL, PRECIO_UNITARIO, UNIDADES, VALORACION FROM LINEA "
 					);
 
 			boolean first = true;
 
-			first = QueryUtils.addClause(idPedido, sb, first, " L.ID_PEDIDO = ? ");
+			first = QueryUtils.addClause(idPedido, sb, first, " ID_PEDIDO = ? ");
 
 			query = sb.toString();
 			preparedStatement = cn.prepareStatement(query);
