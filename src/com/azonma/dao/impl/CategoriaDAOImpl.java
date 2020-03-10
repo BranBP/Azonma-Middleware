@@ -15,7 +15,6 @@ import com.azonma.exceptions.DataException;
 import com.azonma.model.Categoria;
 import com.azonma.util.JDBCUtils;
 import com.azonma.util.QueryUtils;
-import com.mysql.jdbc.Statement;
 
 public class CategoriaDAOImpl implements CategoriaDAO{ 
 
@@ -40,7 +39,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 
 			boolean first = true;
 
-			first = QueryUtils.addClause(id, stringBuilder, first, " ID_CATEGORIA = ? ");
+			first = QueryUtils.addClause(id, stringBuilder, first, " C.ID_CATEGORIA = ? ");
 
 			query = stringBuilder.toString();
 			preparedStatement = connection.prepareStatement(query);
@@ -71,7 +70,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 	}
 
 	@Override
-	public List<Categoria> findAll(Connection connection, int startIndex, int timesCount) throws DataException {   
+	public List<Categoria> findAll(Connection connection, String idioma, int startIndex, int timesCount) throws DataException {   
 
 		List<Categoria> categorias = new ArrayList<Categoria>();	    
 		Categoria r = null; 
@@ -81,19 +80,24 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 		ResultSet rs = null;
 
 		try {
-			query = (
+
+			StringBuilder stringBuilder = new StringBuilder(
 					" SELECT C.ID_CATEGORIA, CI.NOMBRE, I.NOMBRE, C.ID_CATEGORIA_PADRE "
 							+" FROM CATEGORIA C INNER JOIN CATEGORIA_IDIOMA CI ON C.ID_CATEGORIA = CI.ID_CATEGORIA"
 							+" INNER JOIN IDIOMA I ON I.ID_IDIOMA = CI.ID_IDIOMA  "
 					);
 
-			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
-			}
+			boolean first = true;
+			first = QueryUtils.addClause(idioma, stringBuilder, first, " UPPER(I.NOMBRE) LIKE UPPER(?) ");
+			stringBuilder.append(" GROUP BY C.ID_CATEGORIA ");
 
-			preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
+			query = stringBuilder.toString();
+			preparedStatement = connection.prepareStatement(query);
 
-			rs = preparedStatement.getGeneratedKeys();
+			int i = 1;
+			preparedStatement.setString(i++, idioma);  
+
+			rs = preparedStatement.executeQuery(); 
 			int currentCount = 0;
 
 			if ((startIndex >=1) && rs.absolute(startIndex)) {
@@ -109,6 +113,10 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			}else {
 				logger.info("Han salido {} resultados", categorias.size());
 			} 
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", preparedStatement.toString());
+			}
 
 		} catch (SQLException e) {
 			logger.error("Error. Query completa {} ", preparedStatement.toString());  

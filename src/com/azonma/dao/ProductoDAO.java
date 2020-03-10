@@ -13,6 +13,8 @@ public interface ProductoDAO {
 
 	public List<Producto> findByCriteria(Connection cn, ProductoCriteria c, int startIndex, int timesCount) throws DataException;
 
+	public List<Producto> findByCategoria(Connection connection, long idCategoria) throws DataException; 
+
 	//	No están implementados ni el create ni el update ni el delete de momento
 
 }

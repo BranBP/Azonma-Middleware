@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.azonma.exceptions.DataException;
+import com.azonma.exceptions.MailException;
 import com.azonma.model.Sexo;
 import com.azonma.model.Usuario;
 import com.azonma.model.criteria.UsuarioCriteria;
@@ -39,7 +40,7 @@ public class UsuarioTest {
 		}
 	}
 
-	public void create() throws DataException{
+	public void create() throws DataException, MailException{
 
 		Usuario u = new Usuario();
 
@@ -60,24 +61,30 @@ public class UsuarioTest {
 		Usuario u = new Usuario();
 
 		u = service.findById((long) 2);
+		u.setNombre("Jorge"); 
 
 		service.update(u, u.getId());  
 		System.out.println(u);
+	}
+
+	public void updateEstado() throws DataException{
+		service.updateEstado(1l, 1);
 	}
 
 	public void delete() throws DataException{
 		service.delete((long) 11);
 	}
 
-	public static void main(String[] args) throws DataException{
+	public static void main(String[] args) throws DataException, MailException{
 
 		UsuarioTest test = new UsuarioTest();
 
-		//		test.findById();
-		//		test.findByCriteria();
-		//		test.create();
-		//		test.update();
+		test.findById();
+		test.findByCriteria();
+		test.create();
+		test.update();
 		test.delete();
+		test.updateEstado();
 
 	}
 

@@ -53,7 +53,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 			int i = 1;
 			preparedStatement.setLong(i++, id);
-			
+
 			if(logger.isDebugEnabled()) {
 				logger.debug("Query: {} ", preparedStatement.toString());
 			}
@@ -140,7 +140,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			}else {
 				logger.info("Han salido {} resultados", pedidos.size()); 
 			} 
-			
+
 			if(logger.isDebugEnabled()) {
 				logger.debug("Query: {} ", query);
 			}
@@ -174,7 +174,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			if(logger.isDebugEnabled()) {
 				logger.debug("Query: {} ", query);
 			}
-			
+
 			int i = 1;
 			p.setFecha(new Date());
 			preparedStatement.setDate(i++, new java.sql.Date(p.getFecha().getTime()));
@@ -190,7 +190,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			}
 
 			rs = preparedStatement.getGeneratedKeys();
-			
+
 			if (rs.next()) {
 				Long id = rs.getLong(1); 
 				p.setId(id);
@@ -220,7 +220,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 
 		try {
 
-			query = " UPDATE PEDIDO SET FECHA = ?, PRECIO_TOTAL = ?, CARRITO = ?, ID_USUARIO = ?, ID_ESTADO = ? WHERE ID_USUARIO = " +id; 
+			query = " UPDATE PEDIDO SET FECHA = ?, PRECIO_TOTAL = ?, CARRITO = ?, ID_USUARIO = ?, ID_ESTADO = ? WHERE ID_PEDIDO = " + id; 
 
 			preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  	
 
@@ -232,17 +232,19 @@ public class PedidoDAOImpl implements PedidoDAO{
 			p.setFecha(new Date());
 			preparedStatement.setDate(i++, new java.sql.Date(p.getFecha().getTime()));
 			preparedStatement.setDouble(i++, p.getPrecioTotal());
-			preparedStatement.setBoolean(i++, p.isCarrito());
+			preparedStatement.setBoolean(i++, p.isCarrito()); 
 			preparedStatement.setLong(i++, p.getIdUsuario());
 			preparedStatement.setInt(i++, p.getIdEstado());
 
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {
-				throw new SQLException("Can not add row to table 'Usuario'");
+				throw new SQLException("Can not add row to table 'Pedido'");
 			}
 
-		} catch (Exception e) {
+		} catch (SQLException sqle) {
+			logger.error("Error: {}", sqle.getMessage()); 
+		}catch (Exception e) {
 			logger.error("Error: {}", preparedStatement.toString()); 
 		} finally {
 			JDBCUtils.closeStatement(preparedStatement);
@@ -264,7 +266,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			if(logger.isDebugEnabled()) {
 				logger.debug("Query: {} ", query);
 			}
-			
+
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {

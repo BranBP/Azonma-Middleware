@@ -10,8 +10,10 @@ import org.apache.logging.log4j.Logger;
 import com.azonma.dao.UsuarioDAO;
 import com.azonma.dao.impl.UsuarioDAOImpl;
 import com.azonma.exceptions.DataException;
+import com.azonma.exceptions.MailException;
 import com.azonma.model.Usuario;
 import com.azonma.model.criteria.UsuarioCriteria;
+import com.azonma.service.MailService;
 import com.azonma.service.UsuarioService;
 import com.azonma.util.DBUtils;
 import com.azonma.util.JDBCUtils;
@@ -48,7 +50,7 @@ public class UsuarioServiceImpl implements UsuarioService{
 	}
 
 	@Override
-	public Usuario create(Usuario u) throws DataException { 
+	public Usuario create(Usuario u) throws DataException, MailException { 
 
 		Connection connection = null;
 		boolean commit = false;
@@ -62,6 +64,8 @@ public class UsuarioServiceImpl implements UsuarioService{
 			connection.setAutoCommit(false);
 
 			u = dao.create(connection, u);
+			MailService mail = new MailServiceImpl();
+			mail.sendMail("BIENVENIDO A AZONMA", "Gracias por registrarte en Azonma", u.getEmail());
 			commit = true;
 
 		} catch (SQLException e) {

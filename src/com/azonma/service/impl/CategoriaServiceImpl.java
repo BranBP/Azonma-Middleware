@@ -47,7 +47,7 @@ public class CategoriaServiceImpl  implements CategoriaService{
 	}
 
 	@Override
-	public List<Categoria> findAll(Integer startIndex, Integer timesCount) throws DataException {
+	public List<Categoria> findAll(String idioma, Integer startIndex, Integer timesCount) throws DataException {
 
 		Connection connection = null;
 
@@ -56,7 +56,7 @@ public class CategoriaServiceImpl  implements CategoriaService{
 			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			return dao.findAll(connection, startIndex, timesCount);	
+			return dao.findAll(connection, idioma, startIndex, timesCount);	 
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);

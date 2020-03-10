@@ -296,7 +296,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 
 		try {
 
-			query = " UPDATE USUARIO SET ID_ESTADO = " + idEstado + " WHERE ID_PEDIDO = " + id; 
+			query = " UPDATE USUARIO SET ID_ESTADO = " + idEstado + " WHERE ID_USUARIO = " + id; 
 
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 

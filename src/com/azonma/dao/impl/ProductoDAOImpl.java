@@ -54,7 +54,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			rs = preparedStatement.executeQuery(); 
 
 			if(rs.next()) {
-				producto = loadNext(connection, rs); 
+				producto = loadNext(rs);  
 			}
 
 		} catch (SQLException e) {
@@ -152,7 +152,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			if ((startIndex >=1) && rs.absolute(startIndex)) {
 				do {
-					r = loadNext(cn, rs); 
+					r = loadNext(rs);  
 					productos.add(r);
 					currentCount++; 
 				}while ((currentCount < timesCount) && rs.next());
@@ -176,7 +176,64 @@ public class ProductoDAOImpl implements ProductoDAO {
 		return productos;
 	}
 
-	public Producto loadNext(Connection cn, ResultSet rs) throws SQLException, DataException {
+	@Override
+	public List<Producto> findByCategoria(Connection connection, long idCategoria) throws DataException {
+
+		List <Producto> productos = new ArrayList<Producto>(); 
+		PreparedStatement preparedStatement = null;
+		String query = null;
+		ResultSet rs = null;
+
+		try {
+
+			StringBuilder sb = new StringBuilder(
+					" SELECT P.ID_PRODUCTO, P.PRECIO, P.ID_CATEGORIA, PI.NOMBRE, PI.DESCRIPCION, I.NOMBRE, L.VALORACION "
+							+" FROM PRODUCTO P INNER JOIN PRODUCTO_IDIOMA PI ON PI.ID_PRODUCTO = P.ID_PRODUCTO "
+							+" INNER JOIN IDIOMA I ON I.ID_IDIOMA = PI.ID_IDIOMA "
+							+" LEFT OUTER JOIN LINEA L ON L.ID_PRODUCTO = P.ID_PRODUCTO "
+					);
+
+			boolean first = true;
+
+			first = QueryUtils.addClause(idCategoria, sb, first, " P.ID_CATEGORIA = ? "); 
+
+			query = sb.toString();
+			preparedStatement = connection.prepareStatement(query); 
+
+			int i = 1;
+			preparedStatement.setLong(i++, idCategoria); 
+
+			rs = preparedStatement.executeQuery();
+
+			while(rs.next()) {
+				Producto r = new Producto();
+				r = loadNext(rs); 
+				productos.add(r); 
+			}
+
+			if(productos.size() == 0) { 
+				logger.warn("Criterios no encontrados para idCategoria: {}", idCategoria);   
+			}else {
+				logger.info("Han salido {} resultados", productos.size()); 
+			} 
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", preparedStatement.toString());
+			}
+
+		}catch (SQLException e) {
+			logger.error("Error: {}", preparedStatement.toString());  
+		}
+
+		finally {            
+			JDBCUtils.closeResultSet(rs);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+
+		return productos;
+	}
+
+	public Producto loadNext(ResultSet rs) throws SQLException, DataException {
 
 		Producto r = new Producto();
 		int i = 1;

@@ -192,7 +192,7 @@ public class LineaDAOImpl implements LineaDAO{
 		r.setUnidades(rs.getInt(i++));
 		r.setValoracion(rs.getInt(i++));
 
-		return r;
+		return r; 
 	}
 
 }

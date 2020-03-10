@@ -9,6 +9,6 @@ public interface CategoriaService {
 
 	public Categoria findById(Long id) throws DataException;  
 
-	public List<Categoria> findAll(Integer startIndex, Integer timesCount) throws DataException;   
+	public List<Categoria> findAll(String idioma, Integer startIndex, Integer timesCount) throws DataException;    
 
 }

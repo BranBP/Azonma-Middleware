@@ -72,18 +72,18 @@ public class PedidoTest {
 	public void TestUpdate() throws DataException {
 
 		Pedido p = new Pedido();
-		
+
 		p = service.findById(2l); 
-		
 		p.setCarrito(true);
 
 		service.update(p, 2l); 
+		System.out.println(p);
 	}
 
 	public void TestUpdateEstado() throws DataException {
 
 		Pedido p = new Pedido();
-		
+
 		p.setId(1);
 
 		service.updateEstado(p.getId(), Estado.CREADO); 
@@ -98,11 +98,11 @@ public class PedidoTest {
 		PedidoTest test = new PedidoTest();
 
 		test.TestUpdate();
-//		test.TestDelete();
-//		test.TestUpdateEstado();
-//		test.TestFindByCriteria();
-//		test.TestCreate();
-//		test.TestFindById();
+		test.TestDelete();
+		test.TestUpdateEstado();
+		test.TestFindByCriteria();
+		test.TestCreate();
+		test.TestFindById();
 	}
 
 }
