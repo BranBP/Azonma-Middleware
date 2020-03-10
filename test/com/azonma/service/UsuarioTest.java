@@ -79,12 +79,12 @@ public class UsuarioTest {
 
 		UsuarioTest test = new UsuarioTest();
 
-		test.findById();
-		test.findByCriteria();
+//		test.findById();
+//		test.findByCriteria();
 		test.create();
-		test.update();
-		test.delete();
-		test.updateEstado();
+//		test.update();
+//		test.delete();
+//		test.updateEstado();
 
 	}
 
