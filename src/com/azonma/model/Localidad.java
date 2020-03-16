@@ -31,12 +31,10 @@ public class Localidad {
 
 	public void setIdProvincia(long idProvincia) {
 		this.idProvincia = idProvincia;
-	}
+	} 
 
 	@Override
 	public String toString() {
-		return "Localidad [id=" + id 
-				+", ciudad=" + ciudad 
-				+", idProvincia=" + idProvincia + "]";
+		return "Localidad [id=" + id + ", ciudad=" + ciudad + ", idProvincia=" + idProvincia + "]";
 	}
 }

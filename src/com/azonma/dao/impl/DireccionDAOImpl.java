@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -29,15 +31,15 @@ public class DireccionDAOImpl implements DireccionDAO{
 
 		try {
 
-			StringBuilder stringBuilder = new StringBuilder(
-					" SELECT ID_DIRECCION, NOMBRE, CALLE, ID_LOCALIDAD, ID_USUARIO "
-							+" FROM DIRECCION "); 
+			StringBuilder sb = new StringBuilder(
+					" SELECT ID_DIRECCION, NOMBRE, CALLE, ID_LOCALIDAD, ID_USUARIO FROM DIRECCION "
+					);
 
 			boolean first = true;
 
-			first = QueryUtils.addClause(id, stringBuilder, first, " ID_DIRECCION = ? ");
+			first = QueryUtils.addClause(id, sb, first, " ID_DIRECCION = ? ");
 
-			query = stringBuilder.toString();
+			query = sb.toString();
 			preparedStatement = connection.prepareStatement(query);
 
 			if(logger.isDebugEnabled()) {
@@ -66,6 +68,114 @@ public class DireccionDAOImpl implements DireccionDAO{
 	}
 
 	@Override
+	public List<Direccion> findByUsuario(Connection connection, long idUsuario) throws DataException {
+
+		List <Direccion> direcciones = new ArrayList<Direccion>(); 
+		PreparedStatement preparedStatement = null;
+		String query = null;
+		ResultSet rs = null;
+
+		try {
+
+			StringBuilder sb = new StringBuilder(
+					" SELECT ID_DIRECCION, NOMBRE, CALLE, ID_LOCALIDAD, ID_USUARIO FROM DIRECCION "
+					);
+
+			boolean first = true;
+
+			first = QueryUtils.addClause(idUsuario, sb, first, " ID_USUARIO = ? "); 
+
+			query = sb.toString();
+			preparedStatement = connection.prepareStatement(query);
+
+			int i = 1;
+			preparedStatement.setLong(i++, idUsuario); 
+
+			rs = preparedStatement.executeQuery();
+
+			while(rs.next()) {
+				Direccion r = new Direccion(); 
+				r = loadNext(rs);
+				direcciones.add(r);
+			}
+
+			if(direcciones.size() == 0) { 
+				logger.warn("Criterios no encontrados para idUsuario: {}", idUsuario);  
+			}else {
+				logger.info("Han salido {} resultados", direcciones.size()); 
+			} 
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", preparedStatement.toString());
+			}
+
+		}catch (SQLException e) {
+			logger.error("Error: {}", preparedStatement.toString());  
+		}
+
+		finally {            
+			JDBCUtils.closeResultSet(rs);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+
+		return direcciones;
+	}
+
+	@Override
+	public List<Direccion> findByLocalidad(Connection connection, long idLocalidad) throws DataException { 
+
+		List <Direccion> direcciones = new ArrayList<Direccion>();  
+		PreparedStatement preparedStatement = null;
+		String query = null;
+		ResultSet rs = null;
+
+		try {
+
+			StringBuilder sb = new StringBuilder(
+					" SELECT ID_DIRECCION, NOMBRE, CALLE, ID_LOCALIDAD, ID_USUARIO FROM DIRECCION "
+					);
+
+			boolean first = true;
+
+			first = QueryUtils.addClause(idLocalidad, sb, first, " ID_LOCALIDAD = ? "); 
+
+			query = sb.toString();
+			preparedStatement = connection.prepareStatement(query);
+
+			int i = 1;
+			preparedStatement.setLong(i++, idLocalidad);  
+
+			rs = preparedStatement.executeQuery();
+
+			while(rs.next()) {
+				Direccion r = new Direccion(); 
+				r = loadNext(rs);
+				direcciones.add(r);
+			}
+
+			if(direcciones.size() == 0) { 
+				logger.warn("Criterios no encontrados para idLocalidad: {}", idLocalidad);  
+			}else {
+				logger.info("Han salido {} resultados", direcciones.size()); 
+			} 
+
+			if(logger.isDebugEnabled()) {
+				logger.debug("Query: {} ", preparedStatement.toString());
+			}
+
+		}catch (SQLException e) {
+			logger.error("Error: {}", preparedStatement.toString());  
+		}
+
+		finally {            
+			JDBCUtils.closeResultSet(rs);
+			JDBCUtils.closeStatement(preparedStatement);
+		} 
+
+		return direcciones;
+	}
+
+	@Override
 	public Direccion create(Connection cn, Direccion d) throws DataException { 
 
 		PreparedStatement preparedStatement = null; 
@@ -75,7 +185,7 @@ public class DireccionDAOImpl implements DireccionDAO{
 		try {
 
 			query = " INSERT INTO DIRECCION (NOMBRE, CALLE, ID_LOCALIDAD, ID_USUARIO) "
-					+" VALUES (?, ?, ?, ?, ?, ?)";
+					+" VALUES (?, ?, ?, ?)";
 
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
@@ -104,7 +214,7 @@ public class DireccionDAOImpl implements DireccionDAO{
 			} 
 
 		} catch (SQLException e) {
-			logger.error("Error. Direccion: {}", d);  
+			logger.error("Error. Query: {}", preparedStatement.toString());  
 		}
 
 		finally {            

@@ -1,6 +1,9 @@
 package com.azonma.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 import com.azonma.util.PasswordEncryption;
 
@@ -17,7 +20,18 @@ public class Usuario {
 	private long idIdioma = 0;
 	private String estado = null;
 
+	private List<Direccion> direcciones = null;
+
 	public Usuario() {
+		direcciones = new ArrayList<Direccion>(); 
+	}
+
+	public List<Direccion> getDirecciones() {
+		return Collections.unmodifiableList(direcciones);  
+	}
+
+	public void setDirecciones(List<Direccion> direcciones) {
+		this.direcciones = direcciones;
 	}
 
 	public String getEstado() {
@@ -102,8 +116,8 @@ public class Usuario {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", email=" + email + ", contrasena=" + PasswordEncryption.encryptPassword(contrasena)
-		+", fechaNacimiento=" + fechaNacimiento + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
-		+", idSexo=" + idSexo + ", idIdioma=" + idIdioma + ", estado=" + estado + "]"; 
+		return "Usuario [id=" + id + ", email=" + email + ", contrasena=" + PasswordEncryption.encryptPassword(contrasena) 
+		+ ", fechaNacimiento=" + fechaNacimiento + ", nombre=" + nombre + ", apellido1=" + apellido1 + ", apellido2=" + apellido2
+		+ ", idSexo=" + idSexo + ", idIdioma=" + idIdioma + ", estado=" + estado + ", direcciones=" + direcciones + "]";
 	}
 }

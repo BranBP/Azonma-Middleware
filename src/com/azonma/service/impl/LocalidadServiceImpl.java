@@ -7,26 +7,26 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.azonma.dao.ProvinciaDAO;
-import com.azonma.dao.impl.ProvinciaDAOImpl;
+import com.azonma.dao.LocalidadDAO;
+import com.azonma.dao.impl.LocalidadDAOImpl;
 import com.azonma.exceptions.DataException;
-import com.azonma.model.Provincia;
-import com.azonma.service.ProvinciaService;
+import com.azonma.model.Localidad;
+import com.azonma.service.LocalidadService;
 import com.azonma.util.DBUtils;
 import com.azonma.util.JDBCUtils;
 
-public class ProvinciaServiceImpl implements ProvinciaService{
+public class LocalidadServiceImpl implements LocalidadService{
 
-	private static Logger logger = LogManager.getLogger(ProvinciaServiceImpl.class.getName());
+	private static Logger logger = LogManager.getLogger(LocalidadServiceImpl.class.getName());
 
-	private ProvinciaDAO dao = null;
+	private LocalidadDAO dao = null;
 
-	public ProvinciaServiceImpl() {
-		dao = new ProvinciaDAOImpl();	
+	public LocalidadServiceImpl() {
+		dao = new LocalidadDAOImpl();	
 	}
 
 	@Override
-	public Provincia findById(Long id) throws DataException { 
+	public Localidad findById(Long id) throws DataException { 
 
 		Connection connection = null;
 
@@ -47,7 +47,7 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 	}
 
 	@Override
-	public List<Provincia> findByNombre(String nombre) throws DataException {
+	public List<Localidad> findByCiudad(String nombre) throws DataException {
 
 		Connection connection = null;
 
@@ -56,7 +56,7 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			return dao.findByNombre(connection, nombre);	  
+			return dao.findByCiudad(connection, nombre);	   
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);
@@ -67,7 +67,7 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 	}
 
 	@Override
-	public List<Provincia> findByPais(Long idPais) throws DataException {
+	public List<Localidad> findByProvincia(Long idProvincia) throws DataException {
 
 		Connection connection = null;
 
@@ -76,7 +76,7 @@ public class ProvinciaServiceImpl implements ProvinciaService{
 			connection = DBUtils.conectar(); // ConnectionManager.getConnection();
 			connection.setAutoCommit(true);
 
-			return dao.findByPais(connection, idPais);	  
+			return dao.findByProvincia(connection, idProvincia);	    
 
 		} catch (SQLException e){
 			logger.error(e.getMessage(),e);

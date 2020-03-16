@@ -22,8 +22,11 @@ public class CategoriaTest {
 	}
 
 	public void findAll() throws DataException{
+		
 		List<Categoria> categorias = new ArrayList<Categoria>();
+		
 		categorias = service.findAll("espa—ol", 1, 20);
+		
 		for(Categoria c: categorias) {
 			System.out.println(c); 
 		}

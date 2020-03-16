@@ -5,7 +5,7 @@ public class Direccion {
 	private long id = 0;
 	private String nombre = null;
 	private String calle = null;
-	private long idLocalidad = 0;
+	private long idLocalidad = 0; 
 	private long idUsuario = 0;
 
 	public Direccion() {
@@ -53,10 +53,7 @@ public class Direccion {
 
 	@Override
 	public String toString() {
-		return "Direccion [id=" + id 
-				+", nombre=" + nombre 
-				+", calle=" + calle 
-				+", idLocalidad=" + idLocalidad
-				+", idUsuario=" + idUsuario + "]";
+		return "Direccion [id=" + id + ", nombre=" + nombre + ", calle=" + calle + ", idLocalidad=" + idLocalidad
+				+ ", idUsuario=" + idUsuario + "]";
 	}
 }
