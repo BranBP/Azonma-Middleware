@@ -10,8 +10,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.azonma.dao.LocalidadDAO;
 import com.azonma.dao.ProvinciaDAO;
 import com.azonma.exceptions.DataException;
+import com.azonma.model.Localidad;
 import com.azonma.model.Provincia;
 import com.azonma.util.JDBCUtils;
 import com.azonma.util.QueryUtils;
@@ -19,6 +21,12 @@ import com.azonma.util.QueryUtils;
 public class ProvinciaDAOImpl implements ProvinciaDAO{ 
 
 	private static Logger logger = LogManager.getLogger(ProvinciaDAOImpl.class.getName());
+
+	private LocalidadDAO localidadDAO = null;
+
+	public ProvinciaDAOImpl() { 
+		localidadDAO = new LocalidadDAOImpl();  
+	}
 
 	@Override
 	public Provincia findById(Connection connection, long id) throws DataException{ 
@@ -51,7 +59,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 			rs = preparedStatement.executeQuery(); 
 
 			if(rs.next()) {
-				provincia = loadNext(rs); 
+				provincia = loadNext(connection, rs);  
 			}
 
 		} catch (SQLException e) {
@@ -94,7 +102,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 
 			while(rs.next()) {
 				Provincia r = new Provincia();
-				r = loadNext(rs); 
+				r = loadNext(connection, rs); 
 				provincias.add(r);
 			} 
 
@@ -147,7 +155,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 
 			while(rs.next()) {
 				Provincia r = new Provincia();
-				r = loadNext(rs); 
+				r = loadNext(connection, rs); 
 				provincias.add(r); 
 			}
 
@@ -173,7 +181,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 		return provincias; 
 	}
 
-	public Provincia loadNext(ResultSet rs) throws SQLException { 
+	public Provincia loadNext(Connection connection, ResultSet rs) throws SQLException, DataException { 
 
 		Provincia r = new Provincia();
 		int i = 1;
@@ -181,6 +189,9 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 		r.setId(rs.getLong(i++));
 		r.setNombre(rs.getString(i++));
 		r.setIdPais(rs.getLong(i++));
+
+		List<Localidad> localidades = localidadDAO.findByProvincia(connection, r.getId()); 
+		r.setLocalidades(localidades); 
 
 		return r;
 	}

@@ -98,27 +98,27 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			}
 
 			if(uc.getNombre() != null) {
-				first = QueryUtils.addClause(uc.getNombre(), stringBuilder, first, " UPPER(U.NOMBRE) LIKE ? ");
+				first = QueryUtils.addClause(uc.getNombre(), stringBuilder, first, " UPPER(U.NOMBRE) LIKE UPPER(?) ");
 			}
 
 			if(uc.getApellido1() != null) {
-				first = QueryUtils.addClause(uc.getApellido1(), stringBuilder, first, " UPPER(U.APELLIDO1) LIKE ? ");
+				first = QueryUtils.addClause(uc.getApellido1(), stringBuilder, first, " UPPER(U.APELLIDO1) LIKE UPPER(?) ");
 			}
 
 			if(uc.getApellido2() != null) {
-				first = QueryUtils.addClause(uc.getApellido2(), stringBuilder, first, " UPPER(U.APELLIDO2) LIKE ? ");
+				first = QueryUtils.addClause(uc.getApellido2(), stringBuilder, first, " UPPER(U.APELLIDO2) LIKE UPPER(?) ");
 			}
 
 			if(uc.getSexo() != null) {
-				first = QueryUtils.addClause(uc.getSexo(), stringBuilder, first, " UPPER(U.ID_SEXO) LIKE ? ");
+				first = QueryUtils.addClause(uc.getSexo(), stringBuilder, first, " UPPER(U.ID_SEXO) LIKE UPPER(?) ");
 			}
 
 			if(uc.getIdioma() != null) {
-				first = QueryUtils.addClause(uc.getIdioma(), stringBuilder, first, " UPPER(I.NOMBRE) LIKE ? ");
+				first = QueryUtils.addClause(uc.getIdioma(), stringBuilder, first, " UPPER(I.NOMBRE) LIKE UPPER(?) ");
 			}
 			 
 			if(uc.getEstado()!=null) {
-				first = QueryUtils.addClause(uc.getEstado(), stringBuilder, first, " UPPER(E.NOMBRE) LIKE ? ");
+				first = QueryUtils.addClause(uc.getEstado(), stringBuilder, first, " UPPER(E.NOMBRE) LIKE UPPER(?) ");
 			}
 
 			query = stringBuilder.toString();

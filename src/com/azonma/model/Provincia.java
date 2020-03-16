@@ -1,12 +1,27 @@
 package com.azonma.model;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Provincia {
 
 	private long id = 0;
 	private String nombre = null;
 	private long idPais = 0;
+	
+	private List<Localidad> localidades = null;
 
 	public Provincia() {
+		localidades = new ArrayList<Localidad>(); 
+	}
+
+	public List<Localidad> getLocalidades() {
+		return Collections.unmodifiableList(localidades);    
+	}
+
+	public void setLocalidades(List<Localidad> localidades) {
+		this.localidades = localidades;
 	}
 
 	public long getId() {
@@ -35,8 +50,7 @@ public class Provincia {
 
 	@Override
 	public String toString() {
-		return "Provincia [id=" + id 
-				+", nombre=" + nombre 
-				+", idPais=" + idPais + "]";
+		return "Provincia [id=" + id + ", nombre=" + nombre + ", idPais=" + idPais + ", localidades=" + localidades
+				+ "]";
 	}
 }

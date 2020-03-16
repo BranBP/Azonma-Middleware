@@ -90,7 +90,7 @@ public class PaisDAOImpl implements PaisDAO{
 
 			boolean first = true;
 
-			first = QueryUtils.addClause(nombre, stringBuilder, first, " UPPER(NOMBRE) LIKE ? ");
+			first = QueryUtils.addClause(nombre, stringBuilder, first, " UPPER(NOMBRE) LIKE UPPER(?) ");
 
 			query = stringBuilder.toString();
 			preparedStatement = connection.prepareStatement(query);
@@ -100,7 +100,7 @@ public class PaisDAOImpl implements PaisDAO{
 			}
 
 			int i = 1;
-			preparedStatement.setString(i++, nombre); 
+			preparedStatement.setString(i++, "%" + nombre + "%");  
 
 			rs = preparedStatement.executeQuery();
 

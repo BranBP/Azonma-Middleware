@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.azonma.dao.PaisDAO;
+import com.azonma.dao.impl.PaisDAOImpl;
 import com.azonma.exceptions.DataException;
 import com.azonma.model.Pais;
 import com.azonma.service.PaisService;
@@ -18,8 +19,12 @@ public class PaisServiceImpl implements PaisService{
 
 	private static Logger logger = LogManager.getLogger(PaisServiceImpl.class.getName()); 
 
-	private PaisDAO dao = null; 
-	
+	private PaisDAO dao = null;
+
+	public PaisServiceImpl() {
+		dao = new PaisDAOImpl();	
+	}
+
 	@Override
 	public Pais findById(Long id) throws DataException {
 

@@ -20,7 +20,7 @@ import com.azonma.util.JDBCUtils;
 public class PedidoServiceImpl implements PedidoService{
 
 	private static Logger logger = LogManager.getLogger(PedidoServiceImpl.class.getName());
- 
+
 	private PedidoDAO dao = null;
 
 	public PedidoServiceImpl() {

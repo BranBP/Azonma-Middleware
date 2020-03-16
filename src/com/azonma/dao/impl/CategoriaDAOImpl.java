@@ -95,7 +95,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			preparedStatement = connection.prepareStatement(query);
 
 			int i = 1;
-			preparedStatement.setString(i++, idioma);  
+			preparedStatement.setString(i++, "%" + idioma + "%");  
 
 			rs = preparedStatement.executeQuery(); 
 			int currentCount = 0;

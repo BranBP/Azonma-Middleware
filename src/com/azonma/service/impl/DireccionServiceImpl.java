@@ -18,12 +18,12 @@ import com.azonma.util.JDBCUtils;
 public class DireccionServiceImpl implements DireccionService{ 
 
 	private static Logger logger = LogManager.getLogger(DireccionServiceImpl.class.getName()); 
-	 
-		private DireccionDAO dao = null;
 
-		public DireccionServiceImpl() { 
-			dao = new DireccionDAOImpl();
-		}
+	private DireccionDAO dao = null;
+
+	public DireccionServiceImpl() { 
+		dao = new DireccionDAOImpl();
+	}
 
 	@Override
 	public Direccion findById(Long id) throws DataException {

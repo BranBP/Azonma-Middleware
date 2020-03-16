@@ -103,11 +103,11 @@ public class ProductoDAOImpl implements ProductoDAO {
 				}
 
 				if(c.getIdioma() != null) {
-					first = QueryUtils.addClause(c.getIdioma(), sb, first, " UPPER(I.NOMBRE) LIKE ? ");
+					first = QueryUtils.addClause(c.getIdioma(), sb, first, " UPPER(I.NOMBRE) LIKE UPPER(?) ");
 				}
 
 				if(c.getNombre() != null) {
-					first = QueryUtils.addClause(c.getNombre(), sb, first, " UPPER(PI.NOMBRE) LIKE ? ");
+					first = QueryUtils.addClause(c.getNombre(), sb, first, " UPPER(PI.NOMBRE) LIKE UPPER(?) ");
 				}
 
 				sb.append(" GROUP BY P.ID_PRODUCTO "); 
@@ -123,23 +123,23 @@ public class ProductoDAOImpl implements ProductoDAO {
 				int i = 1;
 
 				if(c.getPrecioDesde() != null) {
-					preparedStatement.setDouble(i++,c.getPrecioDesde());
+					preparedStatement.setDouble(i++, c.getPrecioDesde());
 				}
 
 				if(c.getPrecioHasta() != null) {
-					preparedStatement.setDouble(i++,c.getPrecioHasta());
+					preparedStatement.setDouble(i++, c.getPrecioHasta());
 				}
 
 				if(c.getIdCategoria() != null) {
-					preparedStatement.setInt(i++,c.getIdCategoria());
+					preparedStatement.setInt(i++, c.getIdCategoria());
 				}
 
 				if(c.getIdioma() != null) {
-					preparedStatement.setString(i++,"%" + c.getIdioma() + "%");
+					preparedStatement.setString(i++, "%" + c.getIdioma() + "%");
 				}
 
 				if(c.getNombre() != null) {
-					preparedStatement.setString(i++,"%" + c.getNombre() + "%");
+					preparedStatement.setString(i++, "%" + c.getNombre() + "%");
 				}
 			} 
 

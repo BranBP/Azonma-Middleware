@@ -10,8 +10,10 @@ import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.azonma.dao.DireccionDAO;
 import com.azonma.dao.LocalidadDAO;
 import com.azonma.exceptions.DataException;
+import com.azonma.model.Direccion;
 import com.azonma.model.Localidad;
 import com.azonma.util.JDBCUtils;
 import com.azonma.util.QueryUtils;
@@ -19,6 +21,12 @@ import com.azonma.util.QueryUtils;
 public class LocalidadDAOImpl implements LocalidadDAO{ 
 
 	private static Logger logger = LogManager.getLogger(LocalidadDAOImpl.class.getName()); 
+
+	private DireccionDAO direccionDAO = null;
+
+	public LocalidadDAOImpl() {  
+		direccionDAO = new DireccionDAOImpl();  
+	}
 
 	@Override
 	public Localidad findById(Connection connection, long id) throws DataException{  
@@ -51,7 +59,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			rs = preparedStatement.executeQuery(); 
 
 			if(rs.next()) {
-				localidad = loadNext(rs); 
+				localidad = loadNext(connection, rs); 
 			}
 
 		} catch (SQLException e) {
@@ -94,7 +102,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 
 			while(rs.next()) {
 				Localidad r = new Localidad();
-				r = loadNext(rs); 
+				r = loadNext(connection, rs); 
 				localidades.add(r);
 			} 
 
@@ -136,7 +144,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			boolean first = true;
 
 			first = QueryUtils.addClause(idProvincia, stringBuilder, first, " ID_PROVINCIA = ? "); 
- 
+
 			query = stringBuilder.toString();
 			preparedStatement = connection.prepareStatement(query); 
 
@@ -147,7 +155,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 
 			while(rs.next()) {
 				Localidad r = new Localidad(); 
-				r = loadNext(rs); 
+				r = loadNext(connection, rs); 
 				localidades.add(r); 
 			}
 
@@ -173,7 +181,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 		return localidades; 
 	}
 
-	public Localidad loadNext(ResultSet rs) throws SQLException { 
+	public Localidad loadNext(Connection connection, ResultSet rs) throws SQLException, DataException { 
 
 		Localidad r = new Localidad();
 		int i = 1;
@@ -181,6 +189,9 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 		r.setId(rs.getLong(i++));
 		r.setCiudad(rs.getString(i++));
 		r.setIdProvincia(rs.getLong(i++));
+
+		List<Direccion> direcciones = direccionDAO.findByLocalidad(connection, r.getId()); 
+		r.setDirecciones(direcciones);  
 
 		return r;
 	}
