@@ -29,9 +29,9 @@ public class ProductoTest {
 		List<Producto> productos = new ArrayList <Producto>();
 		ProductoCriteria pc = new ProductoCriteria();
 
-		pc.setIdioma("esp");
+		pc.setPrecioDesde(40d);
 
-		productos = service.findByCriteria(pc, 1, 10);
+		productos = service.findByCriteria(pc, 1, Integer.MAX_VALUE);
 
 		for(Producto p: productos) {
 			System.out.println(p);  
@@ -43,7 +43,7 @@ public class ProductoTest {
 		ProductoTest test = new ProductoTest();
 
 		test.FindByCriteria();
-		test.findById();
+//		test.findById();
 
 	}
 
