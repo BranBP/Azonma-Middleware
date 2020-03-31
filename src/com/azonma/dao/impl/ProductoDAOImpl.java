@@ -24,7 +24,8 @@ public class ProductoDAOImpl implements ProductoDAO {
 	@Override
 	public Producto findById(Connection connection, long id) throws DataException{
 
-		Producto producto = new Producto(); 
+		Producto producto = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -72,7 +73,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	@Override
 	public List<Producto> findByCriteria(Connection cn, ProductoCriteria c, int startIndex, int timesCount) throws DataException {
 
-		List<Producto> productos = new ArrayList<Producto>();	
+		List<Producto> productos = null;	
 		Producto r = null;
 
 		PreparedStatement preparedStatement = null;  
@@ -152,6 +153,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 			if ((startIndex >=1) && rs.absolute(startIndex)) {
 				do {
+					productos = new ArrayList<Producto>();
 					r = loadNext(rs);  
 					productos.add(r);
 					currentCount++; 
@@ -179,7 +181,9 @@ public class ProductoDAOImpl implements ProductoDAO {
 	@Override
 	public List<Producto> findByCategoria(Connection connection, long idCategoria) throws DataException {
 
-		List <Producto> productos = new ArrayList<Producto>(); 
+		List <Producto> productos = null; 
+		Producto r = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -206,7 +210,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Producto r = new Producto();
+				productos = new ArrayList<Producto>();
 				r = loadNext(rs); 
 				productos.add(r); 
 			}

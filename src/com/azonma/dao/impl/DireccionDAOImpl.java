@@ -24,7 +24,8 @@ public class DireccionDAOImpl implements DireccionDAO{
 	@Override
 	public Direccion findById(Connection connection, long id) throws DataException {
 
-		Direccion direccion = new Direccion();  
+		Direccion direccion = null;  
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -70,7 +71,9 @@ public class DireccionDAOImpl implements DireccionDAO{
 	@Override
 	public List<Direccion> findByUsuario(Connection connection, long idUsuario) throws DataException {
 
-		List <Direccion> direcciones = new ArrayList<Direccion>(); 
+		List <Direccion> direcciones = null; 
+		Direccion r = null; 
+
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -94,7 +97,7 @@ public class DireccionDAOImpl implements DireccionDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Direccion r = new Direccion(); 
+				direcciones = new ArrayList<Direccion>();
 				r = loadNext(rs);
 				direcciones.add(r);
 			}
@@ -124,7 +127,9 @@ public class DireccionDAOImpl implements DireccionDAO{
 	@Override
 	public List<Direccion> findByLocalidad(Connection connection, long idLocalidad) throws DataException { 
 
-		List <Direccion> direcciones = new ArrayList<Direccion>();  
+		List <Direccion> direcciones = null;  
+		Direccion r = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -147,8 +152,8 @@ public class DireccionDAOImpl implements DireccionDAO{
 
 			rs = preparedStatement.executeQuery();
 
-			while(rs.next()) {
-				Direccion r = new Direccion(); 
+			while(rs.next()) { 
+				direcciones = new ArrayList<Direccion>();
 				r = loadNext(rs);
 				direcciones.add(r);
 			}

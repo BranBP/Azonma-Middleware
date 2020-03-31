@@ -31,7 +31,8 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 	@Override
 	public Provincia findById(Connection connection, long id) throws DataException{ 
 
-		Provincia provincia = new Provincia();  
+		Provincia provincia = null;
+
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -77,7 +78,9 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 	@Override
 	public List<Provincia> findByNombre(Connection connection, String nombre) throws DataException {
 
-		List <Provincia> provincias = new ArrayList<Provincia>();  
+		List <Provincia> provincias = null;  
+		Provincia r = null;
+
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -101,7 +104,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Provincia r = new Provincia();
+				provincias = new ArrayList<Provincia>();
 				r = loadNext(connection, rs); 
 				provincias.add(r);
 			} 
@@ -130,7 +133,9 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 	@Override
 	public List<Provincia> findByPais(Connection connection, long idPais) throws DataException {
 
-		List <Provincia> provincias = new ArrayList<Provincia>();  
+		List <Provincia> provincias = null;  
+		Provincia r = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -154,7 +159,7 @@ public class ProvinciaDAOImpl implements ProvinciaDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Provincia r = new Provincia();
+				provincias = new ArrayList<Provincia>();
 				r = loadNext(connection, rs); 
 				provincias.add(r); 
 			}

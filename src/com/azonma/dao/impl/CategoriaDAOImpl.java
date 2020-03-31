@@ -23,7 +23,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 	@Override
 	public Categoria findById(Connection connection, long id) throws DataException {
 
-		Categoria categoria = new Categoria();    
+		Categoria categoria = null;    
 
 		PreparedStatement preparedStatement = null;
 		String query = null;
@@ -72,7 +72,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 	@Override
 	public List<Categoria> findAll(Connection connection, String idioma, int startIndex, int timesCount) throws DataException {   
 
-		List<Categoria> categorias = new ArrayList<Categoria>();	    
+		List<Categoria> categorias = null;	    
 		Categoria r = null; 
 
 		PreparedStatement preparedStatement = null;  
@@ -103,6 +103,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			if ((startIndex >=1) && rs.absolute(startIndex)) {
 				do {
 					r = loadNext(rs);   
+					categorias = new ArrayList<Categoria>();
 					categorias.add(r);
 					currentCount++; 
 				}while ((currentCount < timesCount) && rs.next());  

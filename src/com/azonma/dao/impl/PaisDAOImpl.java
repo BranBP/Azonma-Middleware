@@ -31,7 +31,7 @@ public class PaisDAOImpl implements PaisDAO{
 	@Override
 	public Pais findById(Connection connection, long id) throws DataException {
 
-		Pais pais = new Pais();  
+		Pais pais = null;  
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -77,7 +77,9 @@ public class PaisDAOImpl implements PaisDAO{
 	@Override
 	public List<Pais> findByNombre(Connection connection, String nombre) throws DataException {
 
-		List <Pais> paises = new ArrayList<Pais>();    
+		List <Pais> paises = null;    
+		Pais r = null; 
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -105,7 +107,7 @@ public class PaisDAOImpl implements PaisDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Pais r = new Pais(); 
+				paises = new ArrayList<Pais>();
 				r = loadNext(connection, rs);  
 				paises.add(r);
 			} 

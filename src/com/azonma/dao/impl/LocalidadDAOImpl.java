@@ -31,7 +31,8 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 	@Override
 	public Localidad findById(Connection connection, long id) throws DataException{  
 
-		Localidad localidad = new Localidad();  
+		Localidad localidad = null;  
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -77,7 +78,9 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 	@Override
 	public List<Localidad> findByCiudad(Connection connection, String nombreCiudad) throws DataException {
 
-		List <Localidad> localidades = new ArrayList<Localidad>();   
+		List <Localidad> localidades = null;   
+		Localidad r = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -101,7 +104,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Localidad r = new Localidad();
+				localidades = new ArrayList<Localidad>();
 				r = loadNext(connection, rs); 
 				localidades.add(r);
 			} 
@@ -130,7 +133,9 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 	@Override
 	public List<Localidad> findByProvincia(Connection connection, long idProvincia) throws DataException {
 
-		List <Localidad> localidades = new ArrayList<Localidad>();   
+		List <Localidad> localidades = null;   
+		Localidad r = null; 
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -154,7 +159,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Localidad r = new Localidad(); 
+				localidades = new ArrayList<Localidad>();
 				r = loadNext(connection, rs); 
 				localidades.add(r); 
 			}

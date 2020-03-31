@@ -27,7 +27,8 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public Usuario findById(Connection connection, long id) throws DataException { 
 
-		Usuario usuario = new Usuario();
+		Usuario usuario = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -75,7 +76,9 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 	@Override
 	public List<Usuario> findByCriteria(Connection cn, UsuarioCriteria uc) throws DataException {  
 
-		List <Usuario> usuarios = new ArrayList<Usuario>(); 
+		List <Usuario> usuarios = null; 
+		Usuario r = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -160,7 +163,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Usuario r = new Usuario();
+				usuarios = new ArrayList<Usuario>();
 				r = loadNext(rs); 
 				usuarios.add(r);
 			} 

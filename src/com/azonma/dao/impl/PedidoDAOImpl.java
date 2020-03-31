@@ -35,7 +35,8 @@ public class PedidoDAOImpl implements PedidoDAO{
 	@Override
 	public Pedido findById(Connection connection, long id) throws DataException{
 
-		Pedido pedido = new Pedido();
+		Pedido pedido = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -79,7 +80,9 @@ public class PedidoDAOImpl implements PedidoDAO{
 	@Override
 	public List<Pedido> findByCriteria(Connection cn, PedidoCriteria c) throws DataException{
 
-		List <Pedido> pedidos = new ArrayList<Pedido>(); 
+		List <Pedido> pedidos = null; 
+		Pedido r = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -130,7 +133,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Pedido r = new Pedido();
+				pedidos = new ArrayList<Pedido>();
 				r = loadNext(cn, rs);
 				pedidos.add(r);
 			} 

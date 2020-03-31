@@ -24,7 +24,8 @@ public class LineaDAOImpl implements LineaDAO{
 	@Override
 	public Linea findById(Connection cn, long id)  throws DataException{ 
 
-		Linea linea = new Linea(); 
+		Linea linea = null; 
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -71,7 +72,9 @@ public class LineaDAOImpl implements LineaDAO{
 	@Override
 	public List<Linea> findByPedido(Connection cn, long idPedido) throws DataException { 
 
-		List <Linea> lineas = new ArrayList<Linea>();
+		List <Linea> lineas = null;
+		Linea l = null;
+		
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -95,7 +98,7 @@ public class LineaDAOImpl implements LineaDAO{
 			rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				Linea l = new Linea();
+				lineas = new ArrayList<Linea>();
 				l = loadNext(rs);
 				lineas.add(l);
 			}
