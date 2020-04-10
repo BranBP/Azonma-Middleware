@@ -60,8 +60,7 @@ public class UsuarioTest {
 
 		Usuario u = new Usuario();
 
-		u = service.findById((long) 2);
-		u.setNombre("Jorge"); 
+		u = service.findById(10l);
 
 		service.update(u, u.getId());  
 		System.out.println(u);
@@ -72,19 +71,19 @@ public class UsuarioTest {
 	}
 
 	public void delete() throws DataException{
-		service.delete((long) 11);
+		service.delete((long) 1l);
 	}
 
 	public static void main(String[] args) throws DataException, MailException{
 
 		UsuarioTest test = new UsuarioTest();
 
-//		test.findById();
-//		test.findByCriteria();
+		test.findById();
+		test.findByCriteria();
 		test.create();
-//		test.update();
-//		test.delete();
-//		test.updateEstado();
+		test.update();
+		test.delete();S
+		test.updateEstado();
 
 	}
 

@@ -35,7 +35,7 @@ public class CategoriaTest {
 	public static void main(String[] args) throws DataException{ 
 		CategoriaTest test = new CategoriaTest();
 
-		test.findById(); 
+//		test.findById(); 
 		test.findAll();
 
 	}

@@ -27,10 +27,11 @@ public class ProductoTest {
 	public void FindByCriteria() throws DataException {
 
 		List<Producto> productos = new ArrayList <Producto>();
+		
 		ProductoCriteria pc = new ProductoCriteria();
 
-		pc.setPrecioDesde(40d);
-
+		pc.setNombre("a");
+ 
 		productos = service.findByCriteria(pc, 1, Integer.MAX_VALUE);
 
 		for(Producto p: productos) {

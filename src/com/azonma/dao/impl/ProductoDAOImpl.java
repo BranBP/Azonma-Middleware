@@ -25,7 +25,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 	public Producto findById(Connection connection, long id) throws DataException{
 
 		Producto producto = null;
-		
+
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;
@@ -117,7 +117,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 					sb.append(" HAVING AVG(L.VALORACION) > " + c.getMinVal()); 
 				}
 
-				sb.append(" ORDER BY P.ID_PRODUCTO ASC ");
+				sb.append(" ORDER BY P.ID_PRODUCTO DESC ");
 
 				query = sb.toString();
 				preparedStatement = cn.prepareStatement(query);
@@ -145,16 +145,18 @@ public class ProductoDAOImpl implements ProductoDAO {
 			} 
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			rs = preparedStatement.executeQuery();
+			
+			productos = new ArrayList<Producto>();
+			r = new Producto();
 			int currentCount = 0;
 
 			if ((startIndex >=1) && rs.absolute(startIndex)) {
 				do {
-					productos = new ArrayList<Producto>();
-					r = loadNext(rs);  
+					r = loadNext(rs);   
 					productos.add(r);
 					currentCount++; 
 				}while ((currentCount < timesCount) && rs.next());
@@ -183,7 +185,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
 		List <Producto> productos = null; 
 		Producto r = null;
-		
+
 		PreparedStatement preparedStatement = null;
 		String query = null;
 		ResultSet rs = null;

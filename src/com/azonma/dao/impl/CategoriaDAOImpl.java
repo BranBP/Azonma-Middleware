@@ -98,12 +98,14 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			preparedStatement.setString(i++, "%" + idioma + "%");  
 
 			rs = preparedStatement.executeQuery(); 
+
+			categorias = new ArrayList<Categoria>();
+			r = new Categoria();
 			int currentCount = 0;
 
 			if ((startIndex >=1) && rs.absolute(startIndex)) {
 				do {
 					r = loadNext(rs);   
-					categorias = new ArrayList<Categoria>();
 					categorias.add(r);
 					currentCount++; 
 				}while ((currentCount < timesCount) && rs.next());  
