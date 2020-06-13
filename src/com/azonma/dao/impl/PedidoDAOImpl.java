@@ -139,7 +139,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			} 
 
 			if(pedidos.size() == 0) {
-				logger.warn("Criterios no encontrados para {}", c); 
+				logger.warn("Criterios no encontrados para {}", c.toString()); 
 			}else {
 				logger.info("Han salido {} resultados", pedidos.size()); 
 			} 
@@ -242,7 +242,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {
-				throw new SQLException("Can not add row to table 'Pedido'");
+				throw new SQLException("Can not update row to table 'Pedido'");
 			}
 
 		} catch (SQLException sqle) {
@@ -273,7 +273,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			int insertedRows = preparedStatement.executeUpdate();
 
 			if (insertedRows == 0) {
-				throw new SQLException("Can not add row to table 'Pedido'");
+				throw new SQLException("Can not update row to table 'Pedido'");
 			}
 
 		}catch (SQLException e) {

@@ -114,7 +114,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 				sb.append(" GROUP BY P.ID_PRODUCTO "); 
 
 				if(c.getMinVal() != null) {
-					sb.append(" HAVING AVG(L.VALORACION) > " + c.getMinVal()); 
+					sb.append(" HAVING AVG(L.VALORACION) >= " + c.getMinVal()); 
 				}
 
 				sb.append(" ORDER BY P.ID_PRODUCTO DESC ");
@@ -163,7 +163,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 			}
 
 			if(productos.size() == 0) {
-				logger.warn("Criterios no encontrados para {}", c); 
+				logger.warn("Criterios no encontrados para {}"); 
 			}else {
 				logger.info("Han salido {} resultados", productos.size());
 			} 
