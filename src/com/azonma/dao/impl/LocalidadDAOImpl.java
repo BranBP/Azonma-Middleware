@@ -51,7 +51,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			preparedStatement = connection.prepareStatement(query);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query); 
+				logger.debug("Query: {} ", preparedStatement.toString()); 
 			}
 
 			int i = 1;
@@ -116,7 +116,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			} 
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 		} catch (SQLException e) {
@@ -171,7 +171,7 @@ public class LocalidadDAOImpl implements LocalidadDAO{
 			} 
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query); 
+				logger.debug("Query: {} ", preparedStatement.toString()); 
 			}
 
 		}catch (SQLException e) {

@@ -53,7 +53,7 @@ public class PaisDAOImpl implements PaisDAO{
 			preparedStatement.setLong(i++, id);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query); 
+				logger.debug("Query: {} ", preparedStatement.toString()); 
 			}
 
 			rs = preparedStatement.executeQuery(); 
@@ -98,7 +98,7 @@ public class PaisDAOImpl implements PaisDAO{
 			preparedStatement = connection.prepareStatement(query);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;

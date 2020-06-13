@@ -45,7 +45,7 @@ public class LineaDAOImpl implements LineaDAO{
 			preparedStatement = cn.prepareStatement(query);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;
@@ -141,7 +141,7 @@ public class LineaDAOImpl implements LineaDAO{
 
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;

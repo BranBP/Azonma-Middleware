@@ -45,7 +45,7 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 			preparedStatement = connection.prepareStatement(query);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;

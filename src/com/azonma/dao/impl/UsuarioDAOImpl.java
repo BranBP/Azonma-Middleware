@@ -49,7 +49,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement = connection.prepareStatement(query);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;
@@ -175,7 +175,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			} 
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 		} catch (SQLException e) {
@@ -204,7 +204,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;
@@ -259,7 +259,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); 
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;
@@ -304,7 +304,7 @@ public class UsuarioDAOImpl implements UsuarioDAO{
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int insertedRows = preparedStatement.executeUpdate();

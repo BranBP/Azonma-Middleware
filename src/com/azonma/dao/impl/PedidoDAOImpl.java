@@ -175,7 +175,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;
@@ -228,7 +228,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);  	
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int i = 1;
@@ -267,7 +267,7 @@ public class PedidoDAOImpl implements PedidoDAO{
 			preparedStatement = cn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
 			if(logger.isDebugEnabled()) {
-				logger.debug("Query: {} ", query);
+				logger.debug("Query: {} ", preparedStatement.toString());
 			}
 
 			int insertedRows = preparedStatement.executeUpdate();
